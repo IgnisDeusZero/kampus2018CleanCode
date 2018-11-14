@@ -10,8 +10,7 @@ namespace ControlDigit
         public static int CalculateSnils(this long number)
         {
             return number
-                .ToDigitsArray()
-                .Reverse()
+                .GetDigitsFromLowToHigh()
                 .GetFactorSum(GetSequence())
                 .GetControlDigit();
         }
@@ -25,6 +24,7 @@ namespace ControlDigit
                 i++;
             }
         }
+
         private static int GetControlDigit(this int sum)
         {
             if (sum < 100)
