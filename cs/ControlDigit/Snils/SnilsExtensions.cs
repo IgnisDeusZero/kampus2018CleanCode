@@ -11,6 +11,7 @@ namespace ControlDigit
         {
             return number
                 .ToDigitsArray()
+                .Reverse()
                 .GetFactorSum(GetSequence())
                 .GetControlDigit();
         }

@@ -11,6 +11,7 @@ namespace ControlDigit
         {
             return number
                 .ToDigitsArray()
+                .Reverse()
                 .GetFactorSum(GetFactors())
                 .GetControlDigit();
         }
@@ -64,13 +65,18 @@ namespace ControlDigit
         public static int GetFactorSum(this IEnumerable<int> digitsArray, IEnumerable<int> factorSource)
         {
             int sum = 0;
-            var factor = factorSource.GetEnumerator();
-            foreach (int digit in digitsArray.Reverse())
+            using (var factor = factorSource.GetEnumerator())
             {
-                factor.MoveNext();
-                sum += digit * factor.Current;
+                foreach (int digit in digitsArray)
+                {
+                    if (!factor.MoveNext())
+                    {
+                        throw new ArgumentException(nameof(factorSource));
+                    }
+                    sum += digit * factor.Current;
+                }
             }
-
+            
             return sum;
         }
 
